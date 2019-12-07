@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BddShop.Infra.Adapters;
 using BddShop.Infra.Crypto;
@@ -9,7 +7,7 @@ using Bolt.IocAttributes;
 namespace BddShop.Features.Registration
 {
     [AutoBind]
-    public class UserService
+    internal sealed  class UserService
     {
         private readonly IUserStore _userStore;
         private readonly ICrypto _crypto;

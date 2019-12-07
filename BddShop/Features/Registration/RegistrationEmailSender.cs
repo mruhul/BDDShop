@@ -5,7 +5,7 @@ using Bolt.IocAttributes;
 namespace BddShop.Features.Registration
 {
     [AutoBind]
-    public class RegistrationEmailSender
+    internal sealed  class RegistrationEmailSender
     {
         private readonly IEmailSender _emailSender;
 

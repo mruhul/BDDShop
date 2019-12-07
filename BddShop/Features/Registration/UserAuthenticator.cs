@@ -6,7 +6,7 @@ using Bolt.IocAttributes;
 namespace BddShop.Features.Registration
 {
     [AutoBind]
-    public class UserAuthenticator
+    internal sealed  class UserAuthenticator
     {
         private readonly IAuthenticator _authenticator;
 

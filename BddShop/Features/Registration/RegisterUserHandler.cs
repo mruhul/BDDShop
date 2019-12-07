@@ -3,7 +3,7 @@ using Bolt.RequestBus;
 
 namespace BddShop.Features.Registration
 {
-    public class RegisterUserHandler : RequestHandlerAsync<RegisterUser>
+    internal sealed class RegisterUserHandler : RequestHandlerAsync<RegisterUser>
     {
         private readonly UserService _userService;
         private readonly RegistrationEmailSender _emailSender;
