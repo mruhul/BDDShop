@@ -25,6 +25,17 @@ namespace BddShop.Tests.Features.Registration
             _server = server;
         }
 
+        [Scenario(DisplayName = "Registration Page Access")]
+        public void RegistrationPageAccess(HttpClient client, HttpResponseMessage rsp)
+        {
+            $"Given I have an instance of httpclient"
+                .x(() => client = _server.Http());
+            $"When I visit registration page"
+                .x(async () => rsp = await client.GetAsync("accounts/registration"));
+            $"Then I should get okay status code"
+                .x(() => rsp.StatusCode.ShouldBe(HttpStatusCode.OK));
+        }
+
         [Scenario(DisplayName = "Registration Successful")]
         public void RegistrationSuccessful(HttpClient client, 
             RegisterUser input,
