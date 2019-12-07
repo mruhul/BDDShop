@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using BddShop.Features.Registration;
 using BddShop.Tests.Infra;
 using Xbehave;
 using Xunit;
@@ -18,12 +20,20 @@ namespace BddShop.Tests.Features.Registration
         }
 
         [Scenario(DisplayName = "Registration Successful")]
-        public void RegistrationSuccessful(HttpClient client)
+        public void RegistrationSuccessful(HttpClient client, 
+            RegisterUser input,
+            HttpResponseMessage registrationRsp)
         {
             $"Given I have an instance of httpclient"
                 .x(() => client = _server.CreateClient());
+            $"And my registration details are as below"
+                .x(() => input = new RegisterUser
+                {
+                    UserName = Guid.NewGuid().ToString(),
+                    Password = "pass"
+                });
             $"When I submit my details for registration"
-                .x(() => throw new NotImplementedException());
+                .x(async () => registrationRsp = await client.PostFormDataAsync("/accounts/registration", input));
             $"Then I should get a okay response"
                 .x(() => throw new NotImplementedException());
             $"And my details should be stored"
