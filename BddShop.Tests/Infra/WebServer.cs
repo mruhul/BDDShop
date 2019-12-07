@@ -1,4 +1,5 @@
-﻿using BddShop.Infra.Adapters;
+﻿using System.Net.Http;
+using BddShop.Infra.Adapters;
 using BddShop.Tests.Infra.Fakes;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -20,6 +21,14 @@ namespace BddShop.Tests.Infra
             sc.Replace(ServiceDescriptor.Singleton<IUserStore, FakeUserStore>());
             sc.Replace(ServiceDescriptor.Singleton<IEmailSender, FakeEmailSender>());
             sc.Replace(ServiceDescriptor.Singleton<IAuthenticator, FakeAuthenticator>());
+        }
+
+        public HttpClient Http(bool allowAutoRedirect = false)
+        {
+            return this.CreateClient(new WebApplicationFactoryClientOptions
+            {
+                AllowAutoRedirect = allowAutoRedirect
+            });
         }
     }
     

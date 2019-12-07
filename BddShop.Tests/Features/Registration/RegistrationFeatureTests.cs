@@ -32,7 +32,7 @@ namespace BddShop.Tests.Features.Registration
             UserRecord userRecord)
         {
             $"Given I have an instance of httpclient"
-                .x(() => client = _server.CreateClient());
+                .x(() => client = _server.Http());
             $"And my registration details are as below"
                 .x(() => input = new RegisterUser
                 {
@@ -41,8 +41,6 @@ namespace BddShop.Tests.Features.Registration
                 });
             $"When I submit my details for registration"
                 .x(async () => registrationRsp = await client.PostFormDataAsync("/accounts/registration", input));
-            $"Then I should get a okay response"
-                .x(() => { registrationRsp.StatusCode.ShouldBe(HttpStatusCode.OK); });
             $"And my details should be stored"
                 .x(() =>
                 {
@@ -60,8 +58,10 @@ namespace BddShop.Tests.Features.Registration
                 }).ShouldBeTrue());
             $"And I should be authenticated"
                 .x(() => _server.Services.IsAuthenticatedWithEmail(input.Email));
+            $"Then I should get a redirect response"
+                .x(() => { registrationRsp.StatusCode.ShouldBe(HttpStatusCode.Redirect); });
             $"And I should be redirected to home page"
-                .x(() => throw new NotImplementedException());
+                .x(() => { registrationRsp.Headers.Location.ToString().ShouldBe("/"); });
         }
     }
 }

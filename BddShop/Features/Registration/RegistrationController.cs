@@ -50,7 +50,7 @@ namespace BddShop.Features.Registration
                 new Claim(ClaimTypes.Name, id)
             });
 
-            return Ok();
+            return Redirect("/");
         }
     }
 }
