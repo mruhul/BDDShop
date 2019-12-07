@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using BddShop.Features.Registration;
 using BddShop.Tests.Infra;
+using Shouldly;
 using Xbehave;
 using Xunit;
 
@@ -35,7 +37,7 @@ namespace BddShop.Tests.Features.Registration
             $"When I submit my details for registration"
                 .x(async () => registrationRsp = await client.PostFormDataAsync("/accounts/registration", input));
             $"Then I should get a okay response"
-                .x(() => throw new NotImplementedException());
+                .x(() => { registrationRsp.StatusCode.ShouldBe(HttpStatusCode.OK); });
             $"And my details should be stored"
                 .x(() => throw new NotImplementedException());
             $"And my password should be stored as hash"

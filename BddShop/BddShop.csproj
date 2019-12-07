@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Bolt.Common.Extensions" Version="2.1.0" />
+  </ItemGroup>
+
 </Project>
