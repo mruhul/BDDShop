@@ -13,6 +13,12 @@ namespace BddShop.Features.Registration
             _bus = bus;
         }
 
+        [HttpGet("accounts/registration")]
+        public async Task<IActionResult> Get()
+        {
+            return View("~/Features/Registration/Views/Index.cshtml", new RegisterUser());
+        }
+
         [HttpPost("accounts/registration")]
         public async Task<IActionResult> Post(RegisterUser input)
         {
