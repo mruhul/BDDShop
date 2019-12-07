@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using BddShop.Features.Registration;
+using BddShop.Infra.Adapters;
+using BddShop.Infra.Crypto;
 using BddShop.Tests.Infra;
 using BddShop.Tests.Infra.Fakes;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +28,8 @@ namespace BddShop.Tests.Features.Registration
         [Scenario(DisplayName = "Registration Successful")]
         public void RegistrationSuccessful(HttpClient client, 
             RegisterUser input,
-            HttpResponseMessage registrationRsp)
+            HttpResponseMessage registrationRsp,
+            UserRecord userRecord)
         {
             $"Given I have an instance of httpclient"
                 .x(() => client = _server.CreateClient());
@@ -41,9 +44,13 @@ namespace BddShop.Tests.Features.Registration
             $"Then I should get a okay response"
                 .x(() => { registrationRsp.StatusCode.ShouldBe(HttpStatusCode.OK); });
             $"And my details should be stored"
-                .x(() => { _server.Services.GetRecordByEmail(input.Email).ShouldNotBeNull(); });
+                .x(() =>
+                {
+                    userRecord = _server.Services.GetRecordByEmail(input.Email);
+                    userRecord.ShouldNotBeNull();
+                });
             $"And my password should be stored as hash"
-                .x(() => throw new NotImplementedException());
+                .x(() => userRecord.PasswordHash.ShouldNotBe(input.Password));
             $"And and email should be sent to my email address"
                 .x(() => throw new NotImplementedException());
             $"And I should be authenticated"

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BddShop.Infra.Adapters;
+using BddShop.Infra.Crypto;
 using Bolt.Common.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,12 @@ namespace BddShop.Features.Registration
     public class RegistrationController : Controller
     {
         private readonly IUserStore _userStore;
+        private readonly ICrypto _crypto;
 
-        public RegistrationController(IUserStore userStore)
+        public RegistrationController(IUserStore userStore, ICrypto crypto)
         {
             _userStore = userStore;
+            _crypto = crypto;
         }
 
         [HttpPost("accounts/registration")]
@@ -24,7 +27,7 @@ namespace BddShop.Features.Registration
             {
                 Id = Guid.NewGuid().ToString(),
                 Email = input.Email,
-                PasswordHash = input.Password
+                PasswordHash = _crypto.Hash(input.Password, input.Email)
             });
 
             return Ok();
