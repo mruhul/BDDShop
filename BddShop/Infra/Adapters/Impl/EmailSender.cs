@@ -2,7 +2,7 @@
 
 namespace BddShop.Infra.Adapters.Impl
 {
-    public class EmailSender : IEmailSender
+    internal sealed  class EmailSender : IEmailSender
     {
         public ValueTask SendAsync(SendEmailInput input)
         {

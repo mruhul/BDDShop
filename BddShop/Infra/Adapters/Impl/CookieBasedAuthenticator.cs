@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace BddShop.Infra.Adapters.Impl
 {
-    public class CookieBasedAuthenticator : IAuthenticator
+    internal sealed class CookieBasedAuthenticator : IAuthenticator
     {
         private readonly IHttpContextAccessor _context;
 

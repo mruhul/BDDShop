@@ -6,7 +6,7 @@ using Bolt.IocAttributes;
 namespace BddShop.Infra.Crypto
 {
     [AutoBind(LifeCycle.Singleton)]
-    public class Crypto : ICrypto
+    internal sealed  class Crypto : ICrypto
     {
         public string Hash(string value, string salt)
         {

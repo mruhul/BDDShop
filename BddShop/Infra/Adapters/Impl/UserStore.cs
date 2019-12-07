@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BddShop.Infra.Adapters.Impl
 {
-    public class UserStore : IUserStore
+    internal sealed  class UserStore : IUserStore
     {
         private static ConcurrentDictionary<string,UserRecord> _store = new ConcurrentDictionary<string, UserRecord>();
 
