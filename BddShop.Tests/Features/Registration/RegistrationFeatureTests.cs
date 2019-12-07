@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using BddShop.Features.Registration;
 using BddShop.Infra;
 using BddShop.Infra.Adapters;
-using BddShop.Infra.Crypto;
 using BddShop.Tests.Infra;
 using BddShop.Tests.Infra.Fakes;
-using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using Xbehave;
 using Xunit;
@@ -27,7 +24,8 @@ namespace BddShop.Tests.Features.Registration
         }
 
         [Scenario(DisplayName = "Registration Page Access")]
-        public void RegistrationPageAccess(HttpClient client, HttpResponseMessage rsp)
+        public void RegistrationPageAccess(HttpClient client, 
+            HttpResponseMessage rsp)
         {
             $"Given I have an instance of httpclient"
                 .x(() => client = _server.Http());
@@ -77,7 +75,9 @@ namespace BddShop.Tests.Features.Registration
         }
 
         [Scenario(DisplayName = "Registration Failed On Wrong Input")]
-        public void RegistrationFailedOnWrongInput(HttpClient http, HttpResponseMessage rsp, ErrorContainer errors)
+        public void RegistrationFailedOnWrongInput(HttpClient http, 
+            HttpResponseMessage rsp, 
+            ErrorContainer errors)
         {
             $"Given I have an instance of HttpClient"
                 .x(() => http = _server.Http());

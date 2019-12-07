@@ -15,7 +15,7 @@ namespace BddShop.Features.Registration
         }
 
         [HttpGet("accounts/registration")]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             return View("~/Features/Registration/Views/Index.cshtml", new RegisterUser());
         }

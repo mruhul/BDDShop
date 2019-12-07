@@ -26,7 +26,7 @@ namespace BddShop.Features.Registration
             {
                 Id = id,
                 Email = request.Email,
-                PasswordHash = _crypto.Hash(request.Password, request.Email)
+                PasswordHash = _crypto.Hash(request.Password, salt: request.Email)
             });
 
             return id;
