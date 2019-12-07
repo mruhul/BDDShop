@@ -4,6 +4,8 @@ using System.Net;
 using System.Net.Http;
 using BddShop.Features.Registration;
 using BddShop.Tests.Infra;
+using BddShop.Tests.Infra.Fakes;
+using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using Xbehave;
 using Xunit;
@@ -31,7 +33,7 @@ namespace BddShop.Tests.Features.Registration
             $"And my registration details are as below"
                 .x(() => input = new RegisterUser
                 {
-                    UserName = Guid.NewGuid().ToString(),
+                    Email = $"{Guid.NewGuid().ToString()}@test.com",
                     Password = "pass"
                 });
             $"When I submit my details for registration"
@@ -39,7 +41,7 @@ namespace BddShop.Tests.Features.Registration
             $"Then I should get a okay response"
                 .x(() => { registrationRsp.StatusCode.ShouldBe(HttpStatusCode.OK); });
             $"And my details should be stored"
-                .x(() => throw new NotImplementedException());
+                .x(() => { _server.Services.GetRecordByEmail(input.Email).ShouldNotBeNull(); });
             $"And my password should be stored as hash"
                 .x(() => throw new NotImplementedException());
             $"And and email should be sent to my email address"

@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using BddShop.Infra.Adapters;
+using BddShop.Tests.Infra.Fakes;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Xunit;
 
 namespace BddShop.Tests.Infra
@@ -14,7 +17,7 @@ namespace BddShop.Tests.Infra
 
         private void SetupFakes(IServiceCollection sc)
         {
-
+            sc.Replace(ServiceDescriptor.Singleton<IUserStore, FakeUserStore>());
         }
     }
     
