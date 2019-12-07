@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using BddShop.Features.Registration;
+using BddShop.Infra;
 using BddShop.Infra.Adapters;
 using BddShop.Infra.Crypto;
 using BddShop.Tests.Infra;
@@ -76,7 +77,7 @@ namespace BddShop.Tests.Features.Registration
         }
 
         [Scenario(DisplayName = "Registration Failed On Wrong Input")]
-        public void RegistrationFailedOnWrongInput(HttpClient http, HttpResponseMessage rsp)
+        public void RegistrationFailedOnWrongInput(HttpClient http, HttpResponseMessage rsp, ErrorContainer errors)
         {
             $"Given I have an instance of HttpClient"
                 .x(() => http = _server.Http());
@@ -84,8 +85,12 @@ namespace BddShop.Tests.Features.Registration
                 .x(async () => rsp = await http.PostFormDataAsync("/accounts/registration", new RegisterUser()));
             $"Then I should get a response with status code bad request"
                 .x(() => rsp.StatusCode.ShouldBe(HttpStatusCode.BadRequest));
-            $"And I should get following errors"
-                .x(() => throw new NotImplementedException());
+            $"And I should get collection of errors"
+                .x(async () => errors = await rsp.ReadAsAsync<ErrorContainer>());
+            $"And errors should contain error message for empty email"
+                .x(() => errors.HasError("Email", "Email is required"));
+            $"And errors should contain error message for empty password"
+                .x(() => errors.HasError("Password", "Password is required"));
         }
     }
 }

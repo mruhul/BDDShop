@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BddShop.Infra;
 using Bolt.RequestBus;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace BddShop.Features.Registration
             return View("~/Features/Registration/Views/Index.cshtml", new RegisterUser());
         }
 
+        [Validate]
         [HttpPost("accounts/registration")]
         public async Task<IActionResult> Post(RegisterUser input)
         {
