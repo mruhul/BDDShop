@@ -18,6 +18,7 @@ namespace BddShop.Tests.Infra
         private void SetupFakes(IServiceCollection sc)
         {
             sc.Replace(ServiceDescriptor.Singleton<IUserStore, FakeUserStore>());
+            sc.Replace(ServiceDescriptor.Singleton<IEmailSender, FakeEmailSender>());
         }
     }
     

@@ -52,7 +52,12 @@ namespace BddShop.Tests.Features.Registration
             $"And my password should be stored as hash"
                 .x(() => userRecord.PasswordHash.ShouldNotBe(input.Password));
             $"And and email should be sent to my email address"
-                .x(() => throw new NotImplementedException());
+                .x(() => _server.Services.IsEmailSent(new SendEmailInput
+                {
+                    TemplateName = "UserRegistration",
+                    Subject = "Welcome to BDDshop",
+                    To = input.Email
+                }).ShouldBeTrue());
             $"And I should be authenticated"
                 .x(() => throw new NotImplementedException());
             $"And I should be redirected to home page"
