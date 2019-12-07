@@ -59,7 +59,7 @@ namespace BddShop.Tests.Features.Registration
                     To = input.Email
                 }).ShouldBeTrue());
             $"And I should be authenticated"
-                .x(() => throw new NotImplementedException());
+                .x(() => _server.Services.IsAuthenticatedWithEmail(input.Email));
             $"And I should be redirected to home page"
                 .x(() => throw new NotImplementedException());
         }
