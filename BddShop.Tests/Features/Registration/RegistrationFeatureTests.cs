@@ -74,5 +74,18 @@ namespace BddShop.Tests.Features.Registration
             $"And I should be redirected to home page"
                 .x(() => { registrationRsp.Headers.Location.ToString().ShouldBe("/"); });
         }
+
+        [Scenario(DisplayName = "Registration Failed On Wrong Input")]
+        public void RegistrationFailedOnWrongInput(HttpClient http, HttpResponseMessage rsp)
+        {
+            $"Given I have an instance of HttpClient"
+                .x(() => http = _server.Http());
+            $"When I submit an empty form"
+                .x(async () => rsp = await http.PostFormDataAsync("/accounts/registration", new RegisterUser()));
+            $"Then I should get a response with status code bad request"
+                .x(() => rsp.StatusCode.ShouldBe(HttpStatusCode.BadRequest));
+            $"And I should get following errors"
+                .x(() => throw new NotImplementedException());
+        }
     }
 }
