@@ -50,7 +50,7 @@ namespace BddShop.Tests.Features.ProductDetails
             $"And I should see correct title of the product"
                 .x(() => vm.Title.ShouldBe(record.Title));
             $"And I should see correct price of the product"
-                .x(() => throw new NotImplementedException());
+                .x(() => vm.FormattedPrice.ShouldBe("$20.00"));
             $"And I should see discount applied to the product"
                 .x(() => throw new NotImplementedException());
         }

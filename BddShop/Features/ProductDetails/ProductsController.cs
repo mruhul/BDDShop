@@ -21,7 +21,8 @@ namespace BddShop.Features.ProductDetails
             return View("~/Features/ProductsDetails/Views/Index.cshtml",
                 new ProductDetailsViewModel
                 {
-                    Title = product.Title
+                    Title = product.Title,
+                    FormattedPrice = product.Price.ToString("C")
                 });
         }
     }
@@ -29,6 +30,7 @@ namespace BddShop.Features.ProductDetails
     public class ProductDetailsViewModel
     {
         public string Title { get; set; }
+        public string FormattedPrice { get; set; }
     }
 
     public class LoadProductDetails
