@@ -41,4 +41,10 @@ namespace BddShop.Tests.Infra
     {
         public const string WebServer = "WebServer";
     }
+
+    public static class TestCategoryNames
+    {
+        public const string Slow = "Slow";
+        public const string Fast = "Fast";
+    }
 }

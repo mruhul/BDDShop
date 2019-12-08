@@ -1,53 +1,28 @@
 ﻿using System.Threading.Tasks;
 using BddShop.Infra.Adapters;
+using Bolt.RequestBus;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BddShop.Features.ProductDetails
 {
     public class ProductsController : Controller
     {
-        private readonly IProductApiProxy _productApiProxy;
+        private readonly IRequestBus _bus;
 
-        public ProductsController(IProductApiProxy productApiProxy)
+        public ProductsController(IRequestBus bus)
         {
-            _productApiProxy = productApiProxy;
+            _bus = bus;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get(LoadProductDetails input)
         {
-            var product = await _productApiProxy.GetAsync(input.Id);
+            var rsp = await _bus.SendAsync<LoadProductDetails, ProductDetailsViewModel>(input);
 
-            var discount = CalculateDiscount(product.Price);
+            if (rsp.Result == null) return NotFound();
 
-            return View("~/Features/ProductsDetails/Views/Index.cshtml",
-                new ProductDetailsViewModel
-                {
-                    Title = product.Title,
-                    PriceText = product.Price.ToString("C"),
-                    DiscountText = discount > 0 ? discount.ToString("C") : string.Empty
-                });
-        }
-
-        private decimal CalculateDiscount(decimal amount)
-        {
-            if (amount >= 100) return 5;
-            if (amount >= 50) return 2;
-            if (amount >= 10) return 1;
-
-            return 0;
+            return View("~/Features/ProductsDetails/Views/Index.cshtml", rsp.Result);
         }
     }
 
-    public class ProductDetailsViewModel
-    {
-        public string Title { get; set; }
-        public string PriceText { get; set; }
-        public string DiscountText { get; set; }
-    }
-
-    public class LoadProductDetails
-    {
-        public string Id { get; set; }
-    }
 }

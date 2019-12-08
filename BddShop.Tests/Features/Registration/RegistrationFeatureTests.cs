@@ -22,7 +22,8 @@ namespace BddShop.Tests.Features.Registration
         {
             _server = server;
         }
-
+        
+        [Trait("Category", TestCategoryNames.Fast)]
         [Scenario(DisplayName = "Registration Page Access")]
         public void RegistrationPageAccess(HttpClient client, 
             HttpResponseMessage rsp)
@@ -34,7 +35,8 @@ namespace BddShop.Tests.Features.Registration
             $"Then I should get okay status code"
                 .x(() => rsp.StatusCode.ShouldBe(HttpStatusCode.OK));
         }
-
+        
+        [Trait("Category", TestCategoryNames.Fast)]
         [Scenario(DisplayName = "Registration Successful")]
         public void RegistrationSuccessful(HttpClient client, 
             RegisterUser input,
@@ -73,7 +75,8 @@ namespace BddShop.Tests.Features.Registration
             $"And I should be redirected to home page"
                 .x(() => { registrationRsp.Headers.Location.ToString().ShouldBe("/"); });
         }
-
+        
+        [Trait("Category", TestCategoryNames.Fast)]
         [Scenario(DisplayName = "Registration Failed On Wrong Input")]
         public void RegistrationFailedOnWrongInput(HttpClient http, 
             HttpResponseMessage rsp, 

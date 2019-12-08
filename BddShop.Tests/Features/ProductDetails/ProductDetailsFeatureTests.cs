@@ -21,12 +21,14 @@ namespace BddShop.Tests.Features.ProductDetails
             _server = server;
         }
 
+        [Trait("Category", TestCategoryNames.Fast)]
         [Scenario(DisplayName = "Display Product Details")]
-        public void DisplayProductDetails(ProductsController sut, 
+        public void DisplayProductDetails(IServiceScope scope, ProductsController sut, 
             LoadProductDetails input, 
             ProductDetailsViewModel vm,
             ProductRecord record)
         {
+            scope = _server.Services.CreateScope();
             record = new ProductRecord
             {
                 Id = Guid.NewGuid().ToString(),
@@ -35,9 +37,9 @@ namespace BddShop.Tests.Features.ProductDetails
             };
 
             $"Given The system has an existing product record"
-                .x(() => _server.Services.EnsureProductRecordExists(record));
+                .x(() => scope.ServiceProvider.EnsureProductRecordExists(record));
             $"Given I have an instance ProductController"
-                .x(() => sut = _server.Services.GetService<ProductsController>());
+                .x(() => sut = scope.ServiceProvider.GetService<ProductsController>());
             $"And I have an input to load product details"
                 .x(() => input = new LoadProductDetails
                 {
