@@ -61,7 +61,7 @@ namespace BddShop.Tests.Features.Registration
                 });
             $"And my password should be stored as hash"
                 .x(() => userRecord.PasswordHash.ShouldNotBe(input.Password));
-            $"And and email should be sent to my email address"
+            $"And an email should be sent to my email address"
                 .x(() => _server.Services.IsEmailSent(new SendEmailInput
                 {
                     TemplateName = "UserRegistration",
