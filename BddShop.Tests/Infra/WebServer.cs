@@ -21,6 +21,7 @@ namespace BddShop.Tests.Infra
             sc.Replace(ServiceDescriptor.Singleton<IUserStore, FakeUserStore>());
             sc.Replace(ServiceDescriptor.Singleton<IEmailSender, FakeEmailSender>());
             sc.Replace(ServiceDescriptor.Singleton<IAuthenticator, FakeAuthenticator>());
+            sc.Replace(ServiceDescriptor.Singleton<IProductApiProxy, FakeProductApiProxy>());
         }
 
         public HttpClient Http(bool allowAutoRedirect = false)
