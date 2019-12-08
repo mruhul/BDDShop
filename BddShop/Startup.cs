@@ -25,11 +25,7 @@ namespace BddShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRequestBus();
-            services.Scan<Startup>();
-            services.AddControllersWithViews()
-                .AddControllersAsServices()
-                .AddFluentValidation();
+            new ServiceConfiguration().Configure(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +51,18 @@ namespace BddShop
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+    }
+
+    public class ServiceConfiguration
+    {
+        public void Configure(IServiceCollection services)
+        {
+            services.AddRequestBus();
+            services.Scan<Startup>();
+            services.AddControllersWithViews()
+                .AddControllersAsServices()
+                .AddFluentValidation();
         }
     }
 }
