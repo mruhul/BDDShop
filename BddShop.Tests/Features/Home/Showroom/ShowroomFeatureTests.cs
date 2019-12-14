@@ -26,7 +26,7 @@ namespace BddShop.Tests.Features.Home.Showroom
         public void PresentShowroomSection()
         {
             $"Given current tenant is carsales"
-                .x(() => _scope.ServiceProvider.SetCurrentTenant("carlsaes"));
+                .x(() => _scope.ServiceProvider.SetCurrentTenant("carlsales"));
             $"And I have an instance of request bus"
                 .x(() => throw new NotImplementedException());
             $"When I send request for showroom view model"
