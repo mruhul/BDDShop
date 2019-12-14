@@ -1,10 +1,7 @@
 ﻿using System.Net.Http;
-using BddShop.Infra.Adapters;
-using BddShop.Tests.Infra.Fakes;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Xunit;
 
 namespace BddShop.Tests.Infra
@@ -18,10 +15,7 @@ namespace BddShop.Tests.Infra
 
         private void SetupFakes(IServiceCollection sc)
         {
-            sc.Replace(ServiceDescriptor.Singleton<IUserStore, FakeUserStore>());
-            sc.Replace(ServiceDescriptor.Singleton<IEmailSender, FakeEmailSender>());
-            sc.Replace(ServiceDescriptor.Singleton<IAuthenticator, FakeAuthenticator>());
-            sc.Replace(ServiceDescriptor.Singleton<IProductApiProxy, FakeProductApiProxy>());
+            FakeServiceSetup.Run(sc, false);
         }
 
         public HttpClient Http(bool allowAutoRedirect = false)
@@ -40,6 +34,7 @@ namespace BddShop.Tests.Infra
     public static class TestCollectionNames
     {
         public const string WebServer = "WebServer";
+        public const string IocFixture = "IocFixture";
     }
 
     public static class TestCategoryNames
