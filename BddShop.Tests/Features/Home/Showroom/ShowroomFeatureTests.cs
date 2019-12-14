@@ -1,6 +1,7 @@
 ﻿using System;
 using BddShop.Tests.Infra;
 using BddShop.Tests.Infra.Fakes;
+using Bolt.RequestBus;
 using Microsoft.Extensions.DependencyInjection;
 using Xbehave;
 using Xunit;
@@ -23,12 +24,12 @@ namespace BddShop.Tests.Features.Home.Showroom
         }
 
         [Scenario(DisplayName = "PresentShowroomViewModel")]
-        public void PresentShowroomSection()
+        public void PresentShowroomSection(IRequestBus bus)
         {
             $"Given current tenant is carsales"
                 .x(() => _scope.ServiceProvider.SetCurrentTenant("carlsales"));
             $"And I have an instance of request bus"
-                .x(() => throw new NotImplementedException());
+                .x(() => bus = _scope.ServiceProvider.GetService<IRequestBus>());
             $"When I send request for showroom view model"
                 .x(() => throw new NotImplementedException());
             $"Then I should receive a showroom view model"
