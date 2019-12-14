@@ -32,9 +32,9 @@ namespace BddShop.Tests.Features.Home.Showroom
                 .x(() => _scope.ServiceProvider.SetCurrentTenant(input.Tenant));
             $"And I have an instance of request bus"
                 .x(() => bus = _scope.ServiceProvider.GetService<IRequestBus>());
-            $"When I send request for showroom view model"
+            $"When I sent request for showroom view model"
                 .x(async () => rsp = await bus.SendAsync<ShowroomRequest,ShowroomViewModel>(new ShowroomRequest()));
-            $"Then I should receive a showroom view model"
+            $"Then I should receive a showroom view model response"
                 .x(() => rsp.IsSucceed.ShouldBeTrue());
             $"And view model should not be null"
                 .x(() => rsp.Result.ShouldNotBeNull());
