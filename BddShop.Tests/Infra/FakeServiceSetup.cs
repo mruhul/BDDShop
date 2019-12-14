@@ -1,4 +1,5 @@
 ﻿using BddShop.Infra.Adapters;
+using BddShop.Infra.Tenancy;
 using BddShop.Tests.Infra.Fakes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

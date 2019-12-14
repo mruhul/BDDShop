@@ -1,5 +1,5 @@
 ﻿using System;
-using BddShop.Infra.Adapters;
+using BddShop.Infra.Tenancy;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BddShop.Tests.Infra.Fakes

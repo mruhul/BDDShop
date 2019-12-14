@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BddShop.Infra.Tenancy;
 using Bolt.IocScanner;
 using Bolt.RequestBus;
 using FluentValidation.AspNetCore;
@@ -58,6 +59,7 @@ namespace BddShop
     {
         public void Configure(IServiceCollection services)
         {
+            services.Add(ServiceDescriptor.Scoped(typeof(ITenantConfig<>), typeof(TenantConfig<>)));
             services.AddRequestBus();
             services.Scan<Startup>();
             services.AddControllersWithViews()

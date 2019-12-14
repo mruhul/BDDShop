@@ -1,4 +1,4 @@
-﻿namespace BddShop.Infra.Adapters.Impl
+﻿namespace BddShop.Infra.Tenancy
 {
     internal sealed class Tenant : ITenant
     {

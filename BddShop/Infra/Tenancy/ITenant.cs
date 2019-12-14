@@ -1,4 +1,4 @@
-﻿namespace BddShop.Infra.Adapters
+﻿namespace BddShop.Infra.Tenancy
 {
     public interface ITenant
     {

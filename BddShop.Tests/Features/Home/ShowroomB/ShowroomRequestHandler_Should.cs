@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BddShop.Features.Home.Showroom;
 using BddShop.Infra.Adapters;
+using BddShop.Infra.Tenancy;
 using Bolt.RequestBus;
 using Shouldly;
 using Xunit;
