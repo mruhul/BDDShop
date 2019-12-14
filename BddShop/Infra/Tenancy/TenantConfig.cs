@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bolt.IocAttributes;
 
 namespace BddShop.Infra.Tenancy
 {
@@ -9,6 +10,7 @@ namespace BddShop.Infra.Tenancy
         string TenantName { get; }
     }
 
+    [SkipAutoBind]
     internal sealed class TenantConfig<T> : ITenantConfig<T>
     {
         private readonly ITenant _tenant;
