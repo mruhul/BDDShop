@@ -12,42 +12,21 @@ namespace BddShop.Features.Home.Showroom
     public class ShowroomRequestHandler : RequestHandlerAsync<ShowroomRequest,ShowroomViewModel>
     {
         private readonly ITenant _tenant;
+        private readonly IEnumerable<IShowroomViewModelProvider> _providers;
 
-        public ShowroomRequestHandler(ITenant tenant)
+        public ShowroomRequestHandler(ITenant tenant, IEnumerable<IShowroomViewModelProvider> providers)
         {
             _tenant = tenant;
+            _providers = providers;
         }
 
-        protected override async Task<ShowroomViewModel> Handle(IExecutionContextReader context, ShowroomRequest request)
+        protected override Task<ShowroomViewModel> Handle(IExecutionContextReader context, ShowroomRequest request)
         {
-            if (_tenant.Name.IsSame(TenantNames.Carsales))
-            {
-                return new ShowroomViewModel
-                {
-                    Heading = "New Car Showroom",
-                    ViewAllLink = new HtmlLink
-                    {
-                        Url = "https://www.carsales.com.au/new-cars/#start-search",
-                        Text = "View all body types"
-                    }
-                };
-            }
-            else if (_tenant.Name.IsSame(TenantNames.Bikesales))
-            {
-                return new ShowroomViewModel
-                {
-                    Heading = "New Bike Showroom",
-                    ViewAllLink = new HtmlLink
-                    {
-                        Url = "https://www.bikesales.com.au/new-bikes/#start-search",
-                        Text = "View all body types"
-                    }
-                };
-            }
-            else
-            {
-                return null;
-            }
+            var tenantName = _tenant.Name;
+            var provider = _providers.FirstOrDefault(x => x.ForTenants.Any(tenant => tenantName.IsSame(tenant)));
+            return provider == null 
+                    ? Task.FromResult<ShowroomViewModel>(null) 
+                    : Task.FromResult(provider.Get());
         }
     }
 

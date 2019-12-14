@@ -1,5 +1,4 @@
-﻿using System;
-using BddShop.Features.Home.Showroom;
+﻿using BddShop.Features.Home.Showroom;
 using BddShop.Tests.Infra;
 using BddShop.Tests.Infra.Fakes;
 using Bolt.RequestBus;
