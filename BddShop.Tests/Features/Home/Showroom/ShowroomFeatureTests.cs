@@ -24,14 +24,14 @@ namespace BddShop.Tests.Features.Home.Showroom
         }
 
         [Scenario(DisplayName = "PresentShowroomViewModel")]
-        public void PresentShowroomSection(IRequestBus bus)
+        public void PresentShowroomSection(IRequestBus bus, ShowroomViewModel vm)
         {
             $"Given current tenant is carsales"
                 .x(() => _scope.ServiceProvider.SetCurrentTenant("carlsales"));
             $"And I have an instance of request bus"
                 .x(() => bus = _scope.ServiceProvider.GetService<IRequestBus>());
             $"When I send request for showroom view model"
-                .x(() => throw new NotImplementedException());
+                .x(() => vm = bus.SendAsync<ShowroomRequest,ShowroomViewModel>(new ShowroomRequest()));
             $"Then I should receive a showroom view model"
                 .x(() => throw new NotImplementedException());
             $"And view model should match as expected"
