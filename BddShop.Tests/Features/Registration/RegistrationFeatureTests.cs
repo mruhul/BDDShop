@@ -53,7 +53,11 @@ namespace BddShop.Tests.Features.Registration
                 });
             $"When I submit my details for registration"
                 .x(async () => registrationRsp = await client.PostFormDataAsync("/accounts/registration", input));
-            $"And my details should be stored"
+            $"Then I should get a redirect response"
+                .x(() => { registrationRsp.StatusCode.ShouldBe(HttpStatusCode.Redirect); });
+            $"And I should be redirected to home page"
+                .x(() => { registrationRsp.Headers.Location.ToString().ShouldBe("/"); });
+            $"And my details should be stored in db"
                 .x(async () =>
                 {
                     userRecord = await _server.Services.GetRecordByEmail(input.Email);
@@ -70,10 +74,6 @@ namespace BddShop.Tests.Features.Registration
                 }).ShouldBeTrue());
             $"And I should be authenticated"
                 .x(() => _server.Services.IsAuthenticatedWithEmail(input.Email));
-            $"Then I should get a redirect response"
-                .x(() => { registrationRsp.StatusCode.ShouldBe(HttpStatusCode.Redirect); });
-            $"And I should be redirected to home page"
-                .x(() => { registrationRsp.Headers.Location.ToString().ShouldBe("/"); });
         }
         
         [Trait("Category", TestCategoryNames.Fast)]
