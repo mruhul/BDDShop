@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BddShop.Features.Shared;
 using Bolt.RequestBus;
 
 namespace BddShop.Features.Registration
@@ -7,11 +8,11 @@ namespace BddShop.Features.Registration
     {
         private readonly UserService _userService;
         private readonly RegistrationEmailSender _emailSender;
-        private readonly UserAuthenticator _authenticator;
+        private readonly IUserAuthenticator _authenticator;
 
         public RegisterUserHandler(UserService userService, 
             RegistrationEmailSender emailSender, 
-            UserAuthenticator authenticator)
+            IUserAuthenticator authenticator)
         {
             _userService = userService;
             _emailSender = emailSender;

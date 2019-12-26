@@ -3,10 +3,15 @@ using System.Threading.Tasks;
 using BddShop.Infra.Adapters;
 using Bolt.IocAttributes;
 
-namespace BddShop.Features.Registration
+namespace BddShop.Features.Shared
 {
+    public interface IUserAuthenticator
+    {
+        ValueTask Authenticate(UserAuthRequest request);
+    }
+
     [AutoBind]
-    internal sealed  class UserAuthenticator
+    internal sealed  class UserAuthenticator : IUserAuthenticator
     {
         private readonly IAuthenticator _authenticator;
 
@@ -20,7 +25,7 @@ namespace BddShop.Features.Registration
             await _authenticator.Authenticate(new[]
             {
                 new Claim(ClaimTypes.Email, request.Email),
-                new Claim(ClaimTypes.Name, request.Id)
+                new Claim(ClaimTypes.NameIdentifier, request.Id)
             });
         }
     }

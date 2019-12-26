@@ -5,6 +5,7 @@ namespace BddShop.Infra.Adapters
     public interface IUserStore
     {
         ValueTask Create(UserRecord record);
+        ValueTask<UserRecord> GetByEmail(string email);
     }
 
     public class UserRecord

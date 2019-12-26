@@ -20,14 +20,19 @@ namespace BddShop.Tests.Infra.Fakes
             return new ValueTask();
         }
 
-        internal UserRecord GetByEmail(string email) => _store.Values.FirstOrDefault(x => x.Email.IsSame(email));
+        public ValueTask<UserRecord> GetByEmail(string email) => new ValueTask<UserRecord>(_store.Values.FirstOrDefault(x => x.Email.IsSame(email)));
     }
 
     public static class FakeUserStoreExtensions
     {
-        public static UserRecord GetRecordByEmail(this IServiceProvider source, string email)
+        public static ValueTask<UserRecord> GetRecordByEmail(this IServiceProvider source, string email)
         {
             return ((FakeUserStore) source.GetService<IUserStore>()).GetByEmail(email);
+        }
+
+        public static ValueTask EnsureUserRecordExists(this IServiceProvider source, UserRecord record)
+        {
+            return ((FakeUserStore) source.GetService<IUserStore>()).Create(record);
         }
     }
 }

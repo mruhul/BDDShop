@@ -54,9 +54,9 @@ namespace BddShop.Tests.Features.Registration
             $"When I submit my details for registration"
                 .x(async () => registrationRsp = await client.PostFormDataAsync("/accounts/registration", input));
             $"And my details should be stored"
-                .x(() =>
+                .x(async () =>
                 {
-                    userRecord = _server.Services.GetRecordByEmail(input.Email);
+                    userRecord = await _server.Services.GetRecordByEmail(input.Email);
                     userRecord.ShouldNotBeNull();
                 });
             $"And my password should be stored as hash"

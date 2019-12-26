@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BddShop.Infra.Adapters.Impl
@@ -12,6 +13,11 @@ namespace BddShop.Infra.Adapters.Impl
         {
             _store.TryAdd(record.Id, record);
             return new ValueTask();
+        }
+
+        public ValueTask<UserRecord> GetByEmail(string email)
+        {
+            return new ValueTask<UserRecord>(_store.Values.FirstOrDefault(x => x.Email == email));
         }
     }
 }
