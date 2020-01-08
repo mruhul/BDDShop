@@ -29,7 +29,8 @@ namespace BddShop.Tests.Features.Enquiry
             {
                 Id = "abcd-123",
                 Title = "title 1",
-                Price = 99.45m
+                Price = 99.45m,
+                SellerEmail = "seller@gmail.com"
             };
 
             $"Given I have an instance of EnquiryController"
@@ -59,9 +60,19 @@ namespace BddShop.Tests.Features.Enquiry
                     leadProxyInput.ShouldNotBeNull();
                 });
             "And an email should be sent to the seller"
-                .x(() => throw new NotImplementedException());
+                .x(() => ServiceProvider.IsEmailSent(new SendEmailInput
+                {
+                    TemplateName = "EmailSellerLead",
+                    Subject = "A enquiry posted on your item",
+                    To = stock.SellerEmail
+                }).ShouldBeTrue());
             "And a confirmation email should be sent to the buyer"
-                .x(() => throw new NotImplementedException());
+                .x(() => ServiceProvider.IsEmailSent(new SendEmailInput
+                {
+                    TemplateName = "EnquiryThankYou",
+                    Subject = "Thanks for your enquiry",
+                    To = request.Email
+                }).ShouldBeTrue());
 
         }
     }
