@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BddShop.Infra.Tenancy;
 using Bolt.IocScanner;
@@ -63,6 +64,7 @@ namespace BddShop
             services.AddRequestBus();
             services.Scan<Startup>();
             services.AddControllersWithViews()
+                .AddApplicationPart(typeof(Startup).Assembly)
                 .AddControllersAsServices()
                 .AddFluentValidation();
         }

@@ -17,7 +17,7 @@ namespace BddShop.Tests.Infra
         }
 
         protected IServiceProvider ServiceProvider => _scope.ServiceProvider;
-        protected T GetService<T>() => _scope.ServiceProvider.GetService<T>();
+        protected T GetService<T>() => _scope.ServiceProvider.GetRequiredService<T>();
         protected IEnumerable<T> GetServices<T>() => _scope.ServiceProvider.GetServices<T>();
 
         ~IocFixtureTestBase() => _scope.Dispose();

@@ -12,8 +12,4 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="3.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Enquiry\" />
-  </ItemGroup>
-
 </Project>

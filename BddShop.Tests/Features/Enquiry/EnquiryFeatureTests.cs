@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BddShop.Features.Enquiry;
 using BddShop.Tests.Infra;
 using Bolt.RequestBus;
 using Xbehave;
 
 namespace BddShop.Tests.Features.Enquiry
 {
-    public class EnquiryTests : IocFixtureTestBase
+    public class EnquiryFeatureTests : IocFixtureTestBase
     {
-        public EnquiryTests(IocFixture fixture) : base(fixture)
+        public EnquiryFeatureTests(IocFixture fixture) : base(fixture)
         {
         }
 
         [Scenario(DisplayName = "Send Enquiry Successfully")]
-        public void SendEnquirySuccessfully()
+        public void SendEnquirySuccessfully(EnquiryController sut)
         {
+            var bus = GetService<IRequestBus>();
+
             $"Given I have an instance of EnquiryController"
-                .x(() => throw new NotImplementedException());
+                .x(() => sut = GetService<EnquiryController>());
             $"And I have an instance of enquiry input"
                 .x(() => throw new NotImplementedException());
             $"When I sent the enquiry"
