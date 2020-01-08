@@ -63,6 +63,7 @@ namespace BddShop
             services.AddRequestBus();
             services.Scan<Startup>();
             services.AddControllersWithViews()
+                .AddApplicationPart(typeof(Startup).Assembly)
                 .AddControllersAsServices()
                 .AddFluentValidation();
         }
