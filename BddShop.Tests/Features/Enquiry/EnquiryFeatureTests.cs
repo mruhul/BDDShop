@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using BddShop.Features.Enquiry;
+using BddShop.Infra.Adapters;
 using BddShop.Tests.Infra;
+using BddShop.Tests.Infra.Fakes;
 using Bolt.RequestBus;
 using Xbehave;
 
@@ -22,7 +24,12 @@ namespace BddShop.Tests.Features.Enquiry
             $"Given I have an instance of EnquiryController"
                 .x(() => sut = GetService<EnquiryController>());
             $"And a stock available in our system"
-                .x(() => throw new NotImplementedException());
+                .x(() => ServiceProvider.EnsureProductRecordExists(new ProductRecord
+                {
+                    Id = "abcd-123",
+                    Title = "title 1",
+                    Price = 99.45m
+                }));
             $"And I have an instance of enquiry input"
                 .x(() => request = new SendEnquiryRequest
                 {
