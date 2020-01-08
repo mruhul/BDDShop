@@ -6,6 +6,8 @@ using BddShop.Infra.Adapters;
 using BddShop.Tests.Infra;
 using BddShop.Tests.Infra.Fakes;
 using Bolt.RequestBus;
+using Microsoft.AspNetCore.Mvc;
+using Shouldly;
 using Xbehave;
 
 namespace BddShop.Tests.Features.Enquiry
@@ -17,31 +19,36 @@ namespace BddShop.Tests.Features.Enquiry
         }
 
         [Scenario(DisplayName = "Send Enquiry Successfully")]
-        public void SendEnquirySuccessfully(EnquiryController sut, SendEnquiryRequest request)
+        public void SendEnquirySuccessfully(EnquiryController sut, SendEnquiryRequest request, SendEnquiryResponse response)
         {
             var bus = GetService<IRequestBus>();
+            var stock = new ProductRecord
+            {
+                Id = "abcd-123",
+                Title = "title 1",
+                Price = 99.45m
+            };
 
             $"Given I have an instance of EnquiryController"
                 .x(() => sut = GetService<EnquiryController>());
             $"And a stock available in our system"
-                .x(() => ServiceProvider.EnsureProductRecordExists(new ProductRecord
-                {
-                    Id = "abcd-123",
-                    Title = "title 1",
-                    Price = 99.45m
-                }));
+                .x(() => ServiceProvider.EnsureProductRecordExists(stock));
             $"And I have an instance of enquiry input"
                 .x(() => request = new SendEnquiryRequest
                 {
                     Email = "test@gmail.com",
-                    NetworkId = "abcd-123"
+                    NetworkId = stock.Id
                 });
             $"When I sent the enquiry"
-                .x(() => throw new NotImplementedException());
+                .x(async () =>
+                {
+                    var okResult = (await sut.Post(request)) as OkObjectResult;
+                    response = okResult.Value as SendEnquiryResponse;
+                });
             $"Then I should get a response"
-                .x(() => throw new NotImplementedException());
-            $"And the response should be successful"
-                .x(() => throw new NotImplementedException());
+                .x(() => response.ShouldNotBeNull());
+            $"And the response should have lead id"
+                .x(() => response.LeadId.ShouldNotBeNull());
             "And a lead should be sent as below"
                 .x(() => throw new NotImplementedException());
             "And an email should be sent to the seller"
