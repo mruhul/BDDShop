@@ -17,6 +17,7 @@ namespace BddShop.Tests.Infra
                 sc.Replace(ServiceDescriptor.Scoped<IAuthenticator, FakeAuthenticator>());
                 sc.Replace(ServiceDescriptor.Scoped<IProductApiProxy, FakeProductApiProxy>());
                 sc.Replace(ServiceDescriptor.Scoped<ITenant, FakeTenant>());
+                sc.Replace(ServiceDescriptor.Scoped<ILeadApiProxy, FakeLeadApiProxy>());
             }
             else
             {
@@ -24,6 +25,7 @@ namespace BddShop.Tests.Infra
                 sc.Replace(ServiceDescriptor.Singleton<IEmailSender, FakeEmailSender>());
                 sc.Replace(ServiceDescriptor.Singleton<IAuthenticator, FakeAuthenticator>());
                 sc.Replace(ServiceDescriptor.Singleton<IProductApiProxy, FakeProductApiProxy>());
+                sc.Replace(ServiceDescriptor.Singleton<ILeadApiProxy, FakeLeadApiProxy>());
             }
         }
     }

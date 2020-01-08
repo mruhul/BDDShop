@@ -19,7 +19,10 @@ namespace BddShop.Tests.Features.Enquiry
         }
 
         [Scenario(DisplayName = "Send Enquiry Successfully")]
-        public void SendEnquirySuccessfully(EnquiryController sut, SendEnquiryRequest request, SendEnquiryResponse response)
+        public void SendEnquirySuccessfully(EnquiryController sut, 
+            SendEnquiryRequest request, 
+            SendEnquiryResponse response,
+            LeadProxyInput leadProxyInput)
         {
             var bus = GetService<IRequestBus>();
             var stock = new ProductRecord
@@ -49,8 +52,12 @@ namespace BddShop.Tests.Features.Enquiry
                 .x(() => response.ShouldNotBeNull());
             $"And the response should have lead id"
                 .x(() => response.LeadId.ShouldNotBeNull());
-            "And a lead should be sent as below"
-                .x(() => throw new NotImplementedException());
+            "And a lead should be sent with same lead id"
+                .x(() =>
+                {
+                    leadProxyInput = ServiceProvider.GetProxyInputSent(response.LeadId);
+                    leadProxyInput.ShouldNotBeNull();
+                });
             "And an email should be sent to the seller"
                 .x(() => throw new NotImplementedException());
             "And a confirmation email should be sent to the buyer"
