@@ -15,14 +15,20 @@ namespace BddShop.Tests.Features.Enquiry
         }
 
         [Scenario(DisplayName = "Send Enquiry Successfully")]
-        public void SendEnquirySuccessfully(EnquiryController sut)
+        public void SendEnquirySuccessfully(EnquiryController sut, SendEnquiryRequest request)
         {
             var bus = GetService<IRequestBus>();
 
             $"Given I have an instance of EnquiryController"
                 .x(() => sut = GetService<EnquiryController>());
-            $"And I have an instance of enquiry input"
+            $"And a stock available in our system"
                 .x(() => throw new NotImplementedException());
+            $"And I have an instance of enquiry input"
+                .x(() => request = new SendEnquiryRequest
+                {
+                    Email = "test@gmail.com",
+                    NetworkId = "abcd-123"
+                });
             $"When I sent the enquiry"
                 .x(() => throw new NotImplementedException());
             $"Then I should get a response"

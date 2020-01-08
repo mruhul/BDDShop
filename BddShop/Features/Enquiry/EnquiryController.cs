@@ -10,9 +10,15 @@ namespace BddShop.Features.Enquiry
     public class EnquiryController : Controller
     {
         [HttpPost("")]
-        public ActionResult Post()
+        public ActionResult Post(SendEnquiryRequest request)
         {
             return Ok();
         }
+    }
+
+    public class SendEnquiryRequest
+    {
+        public string Email { get; set; }
+        public string NetworkId { get; set; }
     }
 }
