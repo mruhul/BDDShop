@@ -17,5 +17,10 @@ namespace BddShop.Tests.Infra.Fakes
         {
             ((FakeTenant)sp.GetRequiredService<ITenant>()).SetTenant(tenant);
         }
+
+        public static void SetCurrentTenant(this IServiceScope sp, string tenant)
+        {
+            sp.ServiceProvider.SetCurrentTenant(tenant);
+        }
     }
 }

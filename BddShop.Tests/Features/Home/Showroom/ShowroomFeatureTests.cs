@@ -21,10 +21,12 @@ namespace BddShop.Tests.Features.Home.Showroom
         [ClassData(typeof(ShowroomTestData))]
         public void PresentShowroomSection(ShowroomTestDataInput input, IRequestBus bus, IResponse<ShowroomViewModel> rsp)
         {
+            var scope = Scope();
+
             $"Given current tenant is {input.Tenant}"
-                .x(() => ServiceProvider.SetCurrentTenant(input.Tenant));
+                .x(c => scope.Using(c).SetCurrentTenant(input.Tenant));
             $"And I have an instance of request bus"
-                .x(() => bus = ServiceProvider.GetService<IRequestBus>());
+                .x(() => bus = scope.RequestBus());
             $"When I sent request for showroom view model"
                 .x(async () => rsp = await bus.SendAsync<ShowroomRequest, ShowroomViewModel>(new ShowroomRequest()));
             $"Then I should receive a showroom view model response"

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace BddShop.Tests.Infra
@@ -9,17 +6,13 @@ namespace BddShop.Tests.Infra
     [Collection(TestCollectionNames.IocFixture)]
     public abstract class IocFixtureTestBase
     {
-        private readonly IServiceScope _scope;
+        private readonly IocFixture _fixture;
 
         protected IocFixtureTestBase(IocFixture fixture)
         {
-            _scope = fixture.Scope();
+            _fixture = fixture;
         }
 
-        protected IServiceProvider ServiceProvider => _scope.ServiceProvider;
-        protected T GetService<T>() => _scope.ServiceProvider.GetRequiredService<T>();
-        protected IEnumerable<T> GetServices<T>() => _scope.ServiceProvider.GetServices<T>();
-
-        ~IocFixtureTestBase() => _scope.Dispose();
+        protected IServiceScope Scope() => _fixture.Scope();
     }
 }
