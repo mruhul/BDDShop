@@ -37,7 +37,7 @@ namespace BddShop.Tests.Features.ProductDetails
             };
 
             $"Given The system has an existing product record"
-                .x(() => scope.ServiceProvider.EnsureProductRecordExists(record));
+                .x(c => scope.Using(c).ServiceProvider.EnsureProductRecordExists(record));
             $"Given I have an instance ProductController"
                 .x(() => sut = scope.ServiceProvider.GetService<ProductsController>());
             $"And I have an input to load product details"

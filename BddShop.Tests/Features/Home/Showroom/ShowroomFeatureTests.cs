@@ -10,30 +10,25 @@ using Xunit;
 namespace BddShop.Tests.Features.Home.Showroom
 {
     [Collection(TestCollectionNames.IocFixture)]
-    public class ShowroomFeatureTests
+    public class ShowroomFeatureTests : IocFixtureTestBase
     {
-        private readonly IServiceScope _scope;
-
         public ShowroomFeatureTests(IocFixture fixture)
+            : base(fixture)
         {
-            _scope = fixture.Scope();
-        }
-
-        ~ShowroomFeatureTests()
-        {
-            _scope.Dispose();
         }
 
         [Scenario(DisplayName = "PresentShowroomViewModel")]
         [ClassData(typeof(ShowroomTestData))]
         public void PresentShowroomSection(ShowroomTestDataInput input, IRequestBus bus, IResponse<ShowroomViewModel> rsp)
         {
+            var scope = Scope();
+
             $"Given current tenant is {input.Tenant}"
-                .x(() => _scope.ServiceProvider.SetCurrentTenant(input.Tenant));
+                .x(c => scope.Using(c).SetCurrentTenant(input.Tenant));
             $"And I have an instance of request bus"
-                .x(() => bus = _scope.ServiceProvider.GetService<IRequestBus>());
+                .x(() => bus = scope.RequestBus());
             $"When I sent request for showroom view model"
-                .x(async () => rsp = await bus.SendAsync<ShowroomRequest,ShowroomViewModel>(new ShowroomRequest()));
+                .x(async () => rsp = await bus.SendAsync<ShowroomRequest, ShowroomViewModel>(new ShowroomRequest()));
             $"Then I should receive a showroom view model response"
                 .x(() => rsp.IsSucceed.ShouldBeTrue());
             $"And view model should not be null"

@@ -20,4 +20,8 @@
     <ProjectReference Include="..\BddShop\BddShop.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Enquiry\" />
+  </ItemGroup>
+
 </Project>
