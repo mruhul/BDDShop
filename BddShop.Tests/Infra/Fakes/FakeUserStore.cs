@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,9 +28,19 @@ namespace BddShop.Tests.Infra.Fakes
             return ((FakeUserStore) source.GetService<IUserStore>()).GetByEmail(email);
         }
 
+        public static ValueTask<UserRecord> GetRecordByEmail(this IServiceScope source, string email)
+        {
+            return source.GetServiceOfType<IUserStore,FakeUserStore>().GetByEmail(email);
+        }
+
         public static ValueTask EnsureUserRecordExists(this IServiceProvider source, UserRecord record)
         {
             return ((FakeUserStore) source.GetService<IUserStore>()).Create(record);
+        }
+
+        public static ValueTask EnsureUserRecordExists(this IServiceScope source, UserRecord record)
+        {
+            return source.GetServiceOfType<IUserStore,FakeUserStore>().Create(record);
         }
     }
 }
