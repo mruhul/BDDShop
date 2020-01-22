@@ -29,9 +29,9 @@ namespace BddShop.Tests.Features.Enquiry
         {
             var scope = base.Scope();
 
-            $"Given I have an instance of requestbus"
+            "Given I have an instance of requestbus"
                 .x(c => bus = scope.Using(c).RequestBus());
-            "And a stock available with id ABC-123"
+            $"And a stock available with id {testInput.GivenExistingProduct.Id}"
                 .x(c => scope.EnsureProductRecordExists(testInput.GivenExistingProduct));
             "When I submit the user request to send enquiry"
                 .x(async () => response = await bus.SendAsync<SendEnquiryInput,SendEnquiryResponse>(testInput.GivenEnquiryInput));
