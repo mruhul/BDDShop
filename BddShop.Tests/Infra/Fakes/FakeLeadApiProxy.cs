@@ -27,5 +27,9 @@ namespace BddShop.Tests.Infra.Fakes
         {
             return (source.GetService<ILeadApiProxy>() as FakeLeadApiProxy).GetInputById(id);
         }
+        public static LeadProxyInput GetProxyInputSent(this IServiceScope source, string id)
+        {
+            return source.GetServiceOfType<ILeadApiProxy,FakeLeadApiProxy>().GetInputById(id);
+        }
     }
 }

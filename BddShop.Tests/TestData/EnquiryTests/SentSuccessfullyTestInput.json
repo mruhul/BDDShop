@@ -1,0 +1,25 @@
+[
+  {
+    "GivenExistingProduct": {
+      "Id": "prd-123",
+      "Title": "BDD TShirt",
+      "Price": 24.5,
+      "SellerEmail": "seller-email@test.com"
+    },
+    "GivenEnquiryInput": {
+      "NetworkId": "prd-123",
+      "Email": "buyer-email@test.com"
+    },
+    "ExpectedProxyInputSentToLeadApi": {
+      "NetworkId": "prd-123",
+      "Email": "buyer-email@test.com",
+      "Price": 24.5
+    },
+    "ExpectedSendEmailInput": {
+      "Subject": "someone enquired for your product",
+      "To": "seller-email@test.com",
+      "TemplateName": "lead-email",
+      "Data": {}
+    }
+  }
+]

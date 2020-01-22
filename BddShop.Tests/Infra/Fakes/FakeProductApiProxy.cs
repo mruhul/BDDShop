@@ -28,5 +28,10 @@ namespace BddShop.Tests.Infra.Fakes
         {
             ((FakeProductApiProxy)sp.GetService<IProductApiProxy>()).AddProductRecord(record);
         }
+
+        public static void EnsureProductRecordExists(this IServiceScope sp, ProductRecord record)
+        {
+            sp.GetServiceOfType<IProductApiProxy,FakeProductApiProxy>().AddProductRecord(record);
+        }
     }
 }
