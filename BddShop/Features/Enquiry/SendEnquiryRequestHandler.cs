@@ -23,7 +23,7 @@ namespace BddShop.Features.Enquiry
         {
             var product = await _productApiProxy.GetAsync(request.NetworkId);
 
-            var response  = await _leadService.SendLead(request, product);
+            var response  = await _leadService.SendLeadAsync(request, product);
 
             await _emailSender.SendAsync(product.SellerEmail);
 

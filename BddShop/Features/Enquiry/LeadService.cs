@@ -15,7 +15,7 @@ namespace BddShop.Features.Enquiry
             _leadApiProxy = leadApiProxy;
         }
 
-        public async ValueTask<string> SendLead(SendEnquiryInput request, ProductRecord product)
+        public async ValueTask<string> SendLeadAsync(SendEnquiryInput request, ProductRecord product)
         {
             var id = Guid.NewGuid().ToString();
 
